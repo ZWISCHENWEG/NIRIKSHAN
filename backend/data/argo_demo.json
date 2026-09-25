@@ -1,0 +1,140 @@
+{
+  "observations": [
+    {
+      "platform_id": "1902594",
+      "time": "2024-01-01T04:17:58Z",
+      "lat": 10.936285333333334,
+      "lon": 83.46992916666667,
+      "obs_type": "PROVOR_V_JUMBO",
+      "data_mode": "R"
+    },
+    {
+      "platform_id": "1902669",
+      "time": "2024-01-07T14:10:13Z",
+      "lat": 13.316666666666666,
+      "lon": 86.81666666666666,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902394",
+      "time": "2024-01-06T06:14:56Z",
+      "lat": 9.82378,
+      "lon": 85.17153,
+      "obs_type": "S2A",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902765",
+      "time": "2024-01-08T11:33:04Z",
+      "lat": 10.756,
+      "lon": 83.915,
+      "obs_type": "PROVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902766",
+      "time": "2024-01-08T21:40:55Z",
+      "lat": 13.646,
+      "lon": 87.589,
+      "obs_type": "PROVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902768",
+      "time": "2024-01-04T01:38:20Z",
+      "lat": 12.646,
+      "lon": 84.757,
+      "obs_type": "PROVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902770",
+      "time": "2024-01-04T01:32:39Z",
+      "lat": 14.056,
+      "lon": 90.034,
+      "obs_type": "PROVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902772",
+      "time": "2024-01-04T01:32:21Z",
+      "lat": 15.272,
+      "lon": 89.042,
+      "obs_type": "PROVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2902775",
+      "time": "2024-01-04T05:33:21Z",
+      "lat": 8.377,
+      "lon": 85.859,
+      "obs_type": "PROVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2903891",
+      "time": "2024-01-09T14:17:08Z",
+      "lat": 13.066666666666666,
+      "lon": 89.98333333333333,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "2903892",
+      "time": "2024-01-01T14:05:16Z",
+      "lat": 7.8,
+      "lon": 88.28333333333333,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "4903775",
+      "time": "2024-01-07T14:19:20Z",
+      "lat": 14.45,
+      "lon": 86.63333333333334,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "4903776",
+      "time": "2024-01-09T14:06:49Z",
+      "lat": 12.066666666666666,
+      "lon": 89.45,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "5907082",
+      "time": "2024-01-06T14:09:38Z",
+      "lat": 11.266666666666667,
+      "lon": 83.71666666666667,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "6990608",
+      "time": "2024-01-01T13:53:34Z",
+      "lat": 8.616666666666667,
+      "lon": 89.65,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "7901125",
+      "time": "2024-01-08T14:12:32Z",
+      "lat": 14.083333333333334,
+      "lon": 89.26666666666667,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    },
+    {
+      "platform_id": "7901126",
+      "time": "2024-01-09T14:10:04Z",
+      "lat": 12.216666666666667,
+      "lon": 87.4,
+      "obs_type": "ARVOR",
+      "data_mode": "D"
+    }
+  ]
+}

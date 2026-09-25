@@ -1,0 +1,42 @@
+{
+  "datasets": {
+    "argo": {
+      "provider": "Argo GDAC",
+      "source": "Ifremer ERDDAP (tabledap)",
+      "dataset_id": "ArgoFloats",
+      "region": {
+        "min_lat": 5.0,
+        "max_lat": 25.0,
+        "min_lon": 75.0,
+        "max_lon": 100.0
+      },
+      "date_range": {
+        "start": "2024-01-01T00:00:00Z",
+        "end": "2024-01-10T23:59:59Z"
+      },
+      "number_of_profiles": 2740,
+      "unique_floats": 19,
+      "download_date": "2026-09-25",
+      "status": "Downloaded"
+    },
+    "model": {
+      "provider": "Copernicus Marine Service",
+      "product": "GLOBAL_MULTIYEAR_PHY_001_030",
+      "dataset_id": "cmems_mod_glo_phy_my_0.083deg_P1D-m",
+      "source_url": "https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030",
+      "region": {
+        "min_lat": 5.0,
+        "max_lat": 25.0,
+        "min_lon": 75.0,
+        "max_lon": 100.0
+      },
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-10"
+      },
+      "variables_used": ["thetao", "uo", "vo"],
+      "vertical_levels_used": "All 50 levels (0.49m to 5727m)",
+      "status": "Pending manual download (Authentication Required)"
+    }
+  }
+}

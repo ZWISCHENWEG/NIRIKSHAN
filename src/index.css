@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface-base: var(--surface-base);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-overlay: var(--surface-overlay);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-accent-interactive: var(--accent-interactive);
+  --color-accent-interactive-hover: var(--accent-interactive-hover);
+  --color-accent-warning: var(--accent-warning);
+  
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  
+  --spacing-space-1: var(--space-1);
+  --spacing-space-2: var(--space-2);
+  --spacing-space-3: var(--space-3);
+  --spacing-space-4: var(--space-4);
+  --spacing-space-5: var(--space-5);
+  --spacing-space-6: var(--space-6);
+  --spacing-space-8: var(--space-8);
+  --spacing-space-12: var(--space-12);
+}
+
+:root, [data-theme="light"] {
+  /* Surface colors (Warm off-white base) */
+  --surface-base: #F6F4EF;
+  --surface-raised: #EDEAE2;
+  --surface-overlay: #E3DFD5;
+  
+  /* Text colors */
+  --text-primary: #1E1F20;
+  --text-secondary: #4A4D50;
+  --text-muted: #7E848A;
+  
+  /* Accents and States */
+  --accent-interactive: #3D7A85; /* darker teal */
+  --accent-interactive-hover: #2E6068;
+  --accent-warning: #B85C3E;
+  
+  /* Borders and Lines */
+  --border-subtle: #DAD5C9;
+  --border-strong: #C2BCAC;
+  
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  
+  /* Spacing (8pt grid basis) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+  --space-8: 3rem;     /* 48px */
+  --space-12: 4.5rem;  /* 72px */
+}
+
+[data-theme="dark"] {
+  /* Surface colors (Dark graphite base as primary) */
+  --surface-base: #1B1D1F;
+  --surface-raised: #2A2D30;
+  --surface-overlay: #35383B;
+  
+  /* Text colors */
+  --text-primary: #EAEAEA;
+  --text-secondary: #B0B5B9;
+  --text-muted: #7E848A;
+  
+  /* Accents and States */
+  --accent-interactive: #5C8C96;
+  --accent-interactive-hover: #72A5AF;
+  --accent-warning: #D97757;
+  
+  /* Borders and Lines */
+  --border-subtle: #3A3E42;
+  --border-strong: #4F555A;
+}
+
+body {
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden; /* App takes full height, no global scroll */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
