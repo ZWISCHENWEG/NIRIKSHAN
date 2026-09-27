@@ -24,6 +24,7 @@
       "product": "GLOBAL_MULTIYEAR_PHY_001_030",
       "dataset_id": "cmems_mod_glo_phy_my_0.083deg_P1D-m",
       "source_url": "https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030",
+      "dataset_version": "202311",
       "region": {
         "min_lat": 5.0,
         "max_lat": 25.0,
@@ -36,7 +37,12 @@
       },
       "variables_used": ["thetao", "uo", "vo"],
       "vertical_levels_used": "All 50 levels (0.49m to 5727m)",
-      "status": "Pending manual download (Authentication Required)"
+      "status": "Downloaded"
     }
+  },
+  "processing": {
+    "method": "NetCDFAdapter loads datasets lazily using xarray.",
+    "interpolation_strategy": "Nearest-neighbour selection (xarray .sel(method='nearest')) used for matching observation coordinates to model grid points in 3D/4D space.",
+    "sar_integration_method": "Deterministic numerical integration using Euler method with 1-hour timesteps and nearest-neighbour sampling of real uo/vo currents."
   }
 }

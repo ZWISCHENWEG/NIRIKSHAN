@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Scientific Data
+*.nc
+*.nc4
+*.cdf
+__pycache__/
+*.py[cod]

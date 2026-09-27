@@ -1,22 +1,37 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Viewer, Entity, PointGraphics, CameraFlyTo, RectangleGraphics, ImageryLayer } from 'resium';
-import { Cartesian3, Color, Rectangle, UrlTemplateImageryProvider } from 'cesium';
+import { Viewer, Entity, PointGraphics, CameraFlyTo } from 'resium';
+import { Cartesian3, Color, UrlTemplateImageryProvider, ImageryLayer, Ion } from 'cesium';
 import { useAppStore } from '../store/appState';
 import { SarSimulation } from './SarSimulation';
 import { apiClient } from '../services/apiClient';
 import type { Observation } from '../services/types';
 
-const BAY_OF_BENGAL_RECT = Rectangle.fromDegrees(75, 5, 100, 25);
+// Configure Cesium Ion correctly before creating the Viewer
+const ionToken = import.meta.env.VITE_CESIUM_ION_ACCESS_TOKEN || '';
+if (ionToken) {
+  Ion.defaultAccessToken = ionToken;
+}
 
-// Use a free, desaturated CartoDB basemap without needing an Ion Token
+// Use a free, desaturated CartoDB basemap, applying the API key if present
+const cartoKey = import.meta.env.VITE_CARTO_API_KEY || ionToken;
+const cartoUrl = `https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png${cartoKey ? `?key=${cartoKey}` : ''}`;
+
 const baseImagery = new UrlTemplateImageryProvider({
-  url: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
-  credit: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
+  url: cartoUrl,
+  credit: 'Map tiles by Carto, under CC BY 3.0. Data by OSM, under ODbL.'
 });
+
+const cartoBaseLayer = new ImageryLayer(baseImagery);
+
+import { useShallow } from 'zustand/react/shallow';
 
 export const Scene3D: React.FC = () => {
   const [observations, setObservations] = useState<Observation[]>([]);
-  const { mode, selectedFloatId, selectFloat } = useAppStore();
+  const { mode, selectedFloatId, selectFloat } = useAppStore(useShallow(state => ({
+    mode: state.mode,
+    selectedFloatId: state.selectedFloatId,
+    selectFloat: state.selectFloat
+  })));
   const viewerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -39,18 +54,18 @@ export const Scene3D: React.FC = () => {
       ssc.minimumZoomDistance = 100000;  // 100km
       ssc.maximumZoomDistance = 5000000; // 5000km
       
-      // Optionally restrict panning/pitch
-      ssc.enableTilt = false; // keep it top-down for the instrument feel
+      // Keep it top-down for the instrument feel
+      ssc.enableTilt = false; 
     }
   }, [viewerRef.current]);
 
-  const handlePointClick = (id: string) => {
-    selectFloat(id);
+  const handlePointClick = (obs: Observation) => {
+    selectFloat(obs.id, obs);
   };
 
   const getPointColor = (id: string) => {
-    if (mode === 'SURVEY_MODE') return Color.CYAN;
-    return selectedFloatId === id ? Color.YELLOW : Color.CYAN.withAlpha(0.2);
+    if (mode === 'SURVEY_MODE') return Color.fromCssColorString('#46848A'); // muted teal
+    return selectedFloatId === id ? Color.fromCssColorString('#F2F0E9') : Color.fromCssColorString('#46848A').withAlpha(0.2);
   };
 
   return (
@@ -60,38 +75,28 @@ export const Scene3D: React.FC = () => {
       timeline={false}
       animation={false}
       baseLayerPicker={false}
-      baseLayer={false}
+      baseLayer={cartoBaseLayer}
       geocoder={false}
       homeButton={false}
       infoBox={false}
       sceneModePicker={false}
       navigationHelpButton={false}
+      selectionIndicator={false}
       className="absolute inset-0 w-full h-full"
     >
-      <ImageryLayer imageryProvider={baseImagery} />
-      {/* Model Field Stub (Colored Rectangle over Bay of Bengal) */}
-      <Entity>
-        <RectangleGraphics
-          coordinates={BAY_OF_BENGAL_RECT}
-          material={Color.fromCssColorString('rgba(0, 50, 150, 0.4)')}
-          height={0}
-        />
-      </Entity>
-
       {/* Observations */}
       {observations.map(obs => (
         <Entity
           key={obs.id}
           position={Cartesian3.fromDegrees(obs.lon, obs.lat, 0)}
           name={`Float ${obs.id}`}
-          description={`Type: ${obs.type}\nTime: ${obs.time}`}
-          onClick={() => handlePointClick(obs.id)}
+          onClick={() => handlePointClick(obs)}
         >
           <PointGraphics
-            pixelSize={selectedFloatId === obs.id ? 15 : 10}
+            pixelSize={selectedFloatId === obs.id ? 8 : 4}
             color={getPointColor(obs.id)}
-            outlineColor={Color.WHITE}
-            outlineWidth={2}
+            outlineColor={selectedFloatId === obs.id ? Color.fromCssColorString('#111213') : Color.TRANSPARENT}
+            outlineWidth={selectedFloatId === obs.id ? 3 : 0}
           />
         </Entity>
       ))}
@@ -100,7 +105,7 @@ export const Scene3D: React.FC = () => {
       {mode === 'SURVEY_MODE' && (
         <CameraFlyTo
           destination={Cartesian3.fromDegrees(87.5, 15.0, 4000000)}
-          duration={2}
+          duration={2.5}
         />
       )}
       
@@ -112,7 +117,7 @@ export const Scene3D: React.FC = () => {
             if (obs) return Cartesian3.fromDegrees(obs.lon - 2.0, obs.lat - 1.0, 1500000);
             return Cartesian3.fromDegrees(87.5, 15.0, 4000000); // Fallback
           })()}
-          duration={1.5}
+          duration={1.8}
           onComplete={() => useAppStore.getState().setMode('INSPECTION_MODE')}
         />
       )}
@@ -122,3 +127,4 @@ export const Scene3D: React.FC = () => {
     </Viewer>
   );
 };
+

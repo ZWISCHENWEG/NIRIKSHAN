@@ -1,24 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import Plot from 'react-plotly.js';
+import React, { useEffect, Suspense } from 'react';
+const Plot = React.lazy(() => import('react-plotly.js'));
 import { useAppStore } from '../store/appState';
 import { X } from 'lucide-react';
 import { apiClient } from '../services/apiClient';
-import type { ProfileData } from '../services/types';
+import { WaterColumnLens } from './WaterColumnLens/WaterColumnLens';
+import { AnalyticalReadout } from './WaterColumnLens/AnalyticalReadout';
+
+import { useShallow } from 'zustand/react/shallow';
 
 export const InspectionPanel: React.FC = () => {
-  const { mode, selectedFloatId, clearSelection } = useAppStore();
-  const [data, setData] = useState<ProfileData | null>(null);
+  const { 
+    mode, 
+    selectedFloatId, 
+    selectedObservation, 
+    selectedEvidenceCase, 
+    isLoadingEvidence, 
+    setEvidenceCase, 
+    setIsLoadingEvidence, 
+    clearSelection, 
+    analyticalCursor, 
+    setAnalyticalCursor 
+  } = useAppStore(useShallow(state => ({
+    mode: state.mode,
+    selectedFloatId: state.selectedFloatId,
+    selectedObservation: state.selectedObservation,
+    selectedEvidenceCase: state.selectedEvidenceCase,
+    isLoadingEvidence: state.isLoadingEvidence,
+    setEvidenceCase: state.setEvidenceCase,
+    setIsLoadingEvidence: state.setIsLoadingEvidence,
+    clearSelection: state.clearSelection,
+    analyticalCursor: state.analyticalCursor,
+    setAnalyticalCursor: state.setAnalyticalCursor
+  })));
 
   useEffect(() => {
-    if (selectedFloatId && (mode === 'INSPECTION_MODE' || mode === 'TRANSITIONING')) {
-      // Fetch profile data via apiClient
-      apiClient.getProfile(15.0, 85.0) // Stub coords for demo
-        .then(d => setData(d))
-        .catch(e => console.error(e));
+    if (selectedObservation && (mode === 'INSPECTION_MODE' || mode === 'TRANSITIONING')) {
+      setIsLoadingEvidence(true);
+      apiClient.getEvidence(selectedObservation.id)
+        .then(d => {
+          setEvidenceCase(d);
+          setIsLoadingEvidence(false);
+        })
+        .catch(e => {
+          console.error(e);
+          setEvidenceCase(null);
+          setIsLoadingEvidence(false);
+        });
     } else {
-      setData(null);
+      setEvidenceCase(null);
+      setIsLoadingEvidence(false);
     }
-  }, [selectedFloatId, mode]);
+  }, [selectedObservation, mode, setEvidenceCase, setIsLoadingEvidence]);
 
   // Handle panel animation
   const isVisible = mode === 'INSPECTION_MODE' || mode === 'TRANSITIONING';
@@ -26,89 +58,320 @@ export const InspectionPanel: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <aside className={`w-[400px] bg-surface-raised flex flex-col border-l border-border-subtle absolute right-0 top-0 h-full z-10 transition-transform duration-500 ease-out ${mode === 'INSPECTION_MODE' ? 'translate-x-0 shadow-2xl' : 'translate-x-full'}`}>
-      <div className="p-space-4 border-b border-border-subtle flex justify-between items-start">
-        <div>
-          <h2 className="text-sm font-semibold mb-space-1 text-text-primary">Float {selectedFloatId}</h2>
-          <p className="text-xs text-text-muted font-mono">Argo • Real-time QC • BAY OF BENGAL</p>
+    <aside className={`w-[440px] bg-surface-base/95 backdrop-blur-xl flex flex-col border-l border-border-subtle absolute right-0 top-0 h-full z-10 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${mode === 'INSPECTION_MODE' ? 'translate-x-0' : 'translate-x-full'}`}>
+      
+      {/* HEADER / IDENTITY */}
+      <div className="pt-space-8 px-space-8 pb-space-6 flex justify-between items-start">
+        <div className="flex flex-col gap-space-1">
+          <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">Float</div>
+          <h2 className="text-xl font-sans font-normal text-text-primary tracking-wide">ARGO {selectedFloatId}</h2>
         </div>
         <button 
           onClick={clearSelection}
           className="text-text-muted hover:text-text-primary transition-colors p-1"
         >
-          <X size={16} />
+          <X size={20} strokeWidth={1} />
         </button>
       </div>
-      
-      <div className="p-space-4 flex-1 flex flex-col overflow-y-auto">
-        <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-space-4">Vertical Profile: Temperature</h3>
+
+      <div className="px-space-8 flex-1 flex flex-col overflow-y-auto pb-space-8">
         
-        <div className="flex-1 min-h-[400px]">
-          {data ? (
-            <Plot
-              data={[
-                {
-                  x: data.modelValues,
-                  y: data.depths,
-                  type: 'scatter',
-                  mode: 'lines',
-                  name: 'HYCOM Model',
-                  line: { color: '#3D7A85', width: 2 } // Use accent-interactive roughly
-                },
-                {
-                  x: data.observationValues,
-                  y: data.depths,
-                  type: 'scatter',
-                  mode: 'markers+lines',
-                  name: 'Observation',
-                  marker: { color: '#B85C3E', size: 6 }, // Use accent-warning
-                  line: { color: '#B85C3E', width: 1, dash: 'dot' }
-                }
-              ]}
-              layout={{
-                autosize: true,
-                margin: { l: 40, r: 10, t: 10, b: 40 },
-                paper_bgcolor: 'transparent',
-                plot_bgcolor: 'transparent',
-                font: { family: 'IBM Plex Mono, monospace', size: 10, color: '#7E848A' },
-                xaxis: { 
-                  title: 'Temperature (°C)',
-                  gridcolor: '#3A3E42',
-                  zerolinecolor: '#4F555A'
-                },
-                yaxis: { 
-                  title: 'Depth (m)', 
-                  autorange: 'reversed',
-                  gridcolor: '#3A3E42',
-                  zerolinecolor: '#4F555A'
-                },
-                legend: {
-                  orientation: 'h',
-                  y: -0.15
-                },
-                hovermode: 'y unified'
-              }}
-              useResizeHandler={true}
-              style={{ width: '100%', height: '100%' }}
-              config={{ displayModeBar: false }}
-            />
+        {/* METADATA */}
+        <div className="mb-space-8 space-y-4">
+          <div>
+            <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase mb-1">Position</div>
+            <div className="text-sm font-mono text-text-primary">
+              {selectedObservation ? `${Math.abs(selectedObservation.lat).toFixed(2)}° ${selectedObservation.lat >= 0 ? 'N' : 'S'} / ${Math.abs(selectedObservation.lon).toFixed(2)}° ${selectedObservation.lon >= 0 ? 'E' : 'W'}` : 'Unknown'}
+            </div>
+          </div>
+          <div>
+            <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase mb-1">Observed</div>
+            <div className="text-sm font-mono text-text-primary">
+              {selectedObservation ? new Date(selectedObservation.time).toUTCString().replace(' GMT', ' UTC') : 'Unknown'}
+            </div>
+          </div>
+          <div>
+            <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase mb-1">Depth Range</div>
+            <div className="text-sm font-mono text-text-primary">
+              {selectedEvidenceCase?.observation_profile?.depths?.length ? `${Math.min(...selectedEvidenceCase.observation_profile.depths).toFixed(1)} – ${Math.max(...selectedEvidenceCase.observation_profile.depths).toFixed(1)} m` : 'Unknown'}
+            </div>
+          </div>
+        </div>
+
+        <hr className="border-border-subtle mb-space-8" />
+
+        {/* PROFILE CHART SECTION */}
+        <div className="mb-space-2 flex justify-between items-end">
+          <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase">Temperature Profile</h3>
+        </div>
+        
+        <div className="mb-space-2 text-[10px] font-sans text-text-muted flex items-center gap-space-4">
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-[1px] bg-accent-interactive block"></span> Model
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 bg-text-primary rounded-full block"></span> Observation
+          </span>
+        </div>
+        
+        <div className="flex flex-row gap-4 flex-1 min-h-[350px] -mx-4 px-4">
+          
+          {selectedEvidenceCase && !isLoadingEvidence && (
+            <div className="w-8 h-full shrink-0 flex flex-col pt-10 pb-[40px]">
+              <WaterColumnLens evidenceCase={selectedEvidenceCase} />
+            </div>
+          )}
+
+          <div className="flex-1">
+          {isLoadingEvidence ? (
+            <div className="w-full h-full flex items-center justify-center text-text-muted text-[10px] font-mono uppercase tracking-widest">
+              Compiling evidence case...
+            </div>
+          ) : selectedEvidenceCase ? (
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center text-text-muted text-[10px] font-mono uppercase tracking-widest">Loading chart...</div>}>
+              <Plot
+                data={[
+                  {
+                    x: selectedEvidenceCase.model_profile.values,
+                    y: selectedEvidenceCase.model_profile.depths,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: selectedEvidenceCase.provenance.model_dataset_id,
+                    line: { color: '#46848A', width: 1.5 }, // accent-interactive
+                    showlegend: false
+                  },
+                  {
+                    x: selectedEvidenceCase.observation_profile.values,
+                    y: selectedEvidenceCase.observation_profile.depths,
+                    type: 'scatter',
+                    mode: 'markers',
+                    name: 'OBSERVATION',
+                    marker: { color: '#F2F0E9', size: 3 }, // text-primary
+                    showlegend: false
+                  }
+                ]}
+                layout={{
+                  autosize: true,
+                  margin: { l: 50, r: 20, t: 10, b: 40 },
+                  paper_bgcolor: 'transparent',
+                  plot_bgcolor: 'transparent',
+                  font: { family: 'IBM Plex Mono, Courier New, monospace', size: 10, color: '#9FA4A9' },
+                  xaxis: { 
+                    title: 'Temperature (°C)',
+                    gridcolor: '#292C30',
+                    zerolinecolor: '#3F444A',
+                    tickcolor: '#292C30',
+                    gridwidth: 1,
+                    zerolinewidth: 1,
+                  },
+                  yaxis: { 
+                    title: 'Depth (m)', 
+                    autorange: 'reversed',
+                    gridcolor: '#292C30',
+                    zerolinecolor: '#3F444A',
+                    tickcolor: '#292C30',
+                    gridwidth: 1,
+                    zerolinewidth: 1,
+                  },
+                  shapes: analyticalCursor.depth !== null ? [{
+                    type: 'line',
+                    y0: analyticalCursor.depth,
+                    y1: analyticalCursor.depth,
+                    x0: 0,
+                    x1: 1,
+                    xref: 'paper',
+                    line: { color: '#46848A', width: 2, dash: 'dot' }
+                  }] : [],
+                  hovermode: 'y unified'
+                }}
+                useResizeHandler={true}
+                style={{ width: '100%', height: '100%' }}
+                config={{ displayModeBar: false }}
+                onClick={(e) => {
+                  if (e.points && e.points.length > 0) {
+                    const depth = e.points[0].y as number;
+                    setAnalyticalCursor({ depth, source: 'profile_chart' });
+                  }
+                }}
+              />
+            </Suspense>
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-text-muted text-xs font-mono">
-              Loading profile data...
+            <div className="w-full h-full flex items-center justify-center text-text-muted text-[10px] font-mono uppercase tracking-widest">
+              Evidence unavailable
+            </div>
+          )}
+          </div>
+        </div>
+
+          <div className="flex justify-between items-center bg-surface-raised px-space-4 py-space-3 rounded-sm">
+            <span className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">Mean Bias (Obs − Model)</span>
+            <span className="text-xs font-mono text-text-primary">
+              {selectedEvidenceCase?.statistics?.bias !== undefined ? `${selectedEvidenceCase.statistics.bias > 0 ? '+' : ''}${selectedEvidenceCase.statistics.bias.toFixed(2)} °C` : 'N/A'}
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center bg-surface-raised px-space-4 py-space-3 rounded-sm mt-space-2">
+            <span className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">RMSE</span>
+            <span className="text-xs font-mono text-text-primary">
+              {selectedEvidenceCase?.statistics?.rmse !== undefined ? `${selectedEvidenceCase.statistics.rmse.toFixed(2)} °C` : 'N/A'}
+            </span>
+          </div>
+
+        <hr className="border-border-subtle my-space-8" />
+
+        {/* RESIDUAL PROFILE */}
+        <div className="mb-space-2 flex justify-between items-end">
+          <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase">Residual Profile</h3>
+        </div>
+        
+        <div className="flex-1 min-h-[200px] -mx-4 mb-space-6">
+          {isLoadingEvidence ? (
+            <div className="w-full h-full flex items-center justify-center text-text-muted text-[10px] font-mono uppercase tracking-widest">
+              Compiling evidence case...
+            </div>
+          ) : selectedEvidenceCase && selectedEvidenceCase.residual.values.length > 0 ? (
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center text-text-muted text-[10px] font-mono uppercase tracking-widest">Loading chart...</div>}>
+              <Plot
+                data={[
+                  {
+                    x: selectedEvidenceCase.residual.values,
+                    y: selectedEvidenceCase.residual.depths,
+                    type: 'bar',
+                    orientation: 'h',
+                    name: 'Residual',
+                    marker: { 
+                      color: selectedEvidenceCase.residual.values.map(v => v >= 0 ? '#D64E4E' : '#46848A') 
+                    },
+                    showlegend: false
+                  }
+                ]}
+                layout={{
+                  autosize: true,
+                  margin: { l: 50, r: 20, t: 10, b: 40 },
+                  paper_bgcolor: 'transparent',
+                  plot_bgcolor: 'transparent',
+                  font: { family: 'IBM Plex Mono, Courier New, monospace', size: 10, color: '#9FA4A9' },
+                  xaxis: { 
+                    title: 'Residual (°C)',
+                    gridcolor: '#292C30',
+                    zerolinecolor: '#3F444A',
+                    tickcolor: '#292C30',
+                    gridwidth: 1,
+                    zerolinewidth: 1,
+                  },
+                  yaxis: { 
+                    title: 'Depth (m)', 
+                    autorange: 'reversed',
+                    gridcolor: '#292C30',
+                    zerolinecolor: '#3F444A',
+                    tickcolor: '#292C30',
+                    gridwidth: 1,
+                    zerolinewidth: 1,
+                  },
+                  shapes: analyticalCursor.depth !== null ? [{
+                    type: 'line',
+                    y0: analyticalCursor.depth,
+                    y1: analyticalCursor.depth,
+                    x0: 0,
+                    x1: 1,
+                    xref: 'paper',
+                    line: { color: '#46848A', width: 2, dash: 'dot' }
+                  }] : [],
+                  hovermode: 'y unified'
+                }}
+                useResizeHandler={true}
+                style={{ width: '100%', height: '100%' }}
+                config={{ displayModeBar: false }}
+                onClick={(e) => {
+                  if (e.points && e.points.length > 0) {
+                    const depth = e.points[0].y as number;
+                    setAnalyticalCursor({ depth, source: 'profile_chart' });
+                  }
+                }}
+              />
+            </Suspense>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-text-muted text-[10px] font-mono uppercase tracking-widest">
+              Evidence unavailable
             </div>
           )}
         </div>
-        
-        <div className="mt-space-6 border-t border-border-subtle pt-space-4">
-           <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-space-2">Metadata</h3>
-           <dl className="grid grid-cols-2 gap-y-2 text-[10px] font-mono text-text-muted">
-              <dt>Platform Type:</dt><dd className="text-text-primary text-right">APEX Float</dd>
-              <dt>Data Center:</dt><dd className="text-text-primary text-right">INCOIS</dd>
-              <dt>WMO ID:</dt><dd className="text-text-primary text-right">{selectedFloatId}</dd>
-              <dt>Cycle:</dt><dd className="text-text-primary text-right">142</dd>
+
+        <hr className="border-border-subtle my-space-8" />
+
+        {/* ANALYTICAL READOUT */}
+        {selectedEvidenceCase && analyticalCursor.depth !== null && (
+          <div className="mb-space-8">
+            <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase mb-space-4">Analytical Cursor</h3>
+            <AnalyticalReadout evidenceCase={selectedEvidenceCase} />
+          </div>
+        )}
+
+        <hr className="border-border-subtle my-space-8" />
+
+        {/* DERIVED FEATURES */}
+        {selectedEvidenceCase?.features && selectedEvidenceCase.features.length > 0 && (
+          <div className="mb-space-8">
+            <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase mb-space-4">Derived Features</h3>
+            <div className="space-y-2">
+              {selectedEvidenceCase.features.map(feature => (
+                <div key={feature.feature_id} className="flex flex-col bg-surface-raised px-space-4 py-space-3 rounded-sm">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">{feature.feature_type.replace(/_/g, ' ')}</span>
+                    <span className="text-xs font-mono text-text-primary">
+                      {feature.value !== null ? `${feature.value.toFixed(2)} ${feature.unit}` : 'N/A'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-sans text-text-muted/60">{feature.method}</span>
+                    {feature.depth !== null && (
+                      <span className="text-[9px] font-mono text-text-muted/60">@ {feature.depth.toFixed(1)}m</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <hr className="border-border-subtle mb-space-8" />
+
+        {/* TECHNICAL METADATA */}
+        <div>
+           <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase mb-space-4">Technical Metadata</h3>
+           <dl className="grid grid-cols-2 gap-y-4 text-[10px]">
+              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Platform ID</dt>
+              <dd className="font-mono text-text-primary text-right">{selectedObservation?.metadata?.platform_id || selectedFloatId}</dd>
+              
+              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Temporal Sep.</dt>
+              <dd className="font-mono text-text-primary text-right">
+                {selectedEvidenceCase?.model_match?.temporal_separation !== undefined ? `${selectedEvidenceCase.model_match.temporal_separation.toFixed(1)} h` : 'N/A'}
+              </dd>
+              
+              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Spatial Sep.</dt>
+              <dd className="font-mono text-text-primary text-right">
+                {selectedEvidenceCase?.model_match?.spatial_separation !== undefined ? `${(selectedEvidenceCase.model_match.spatial_separation * 111).toFixed(1)} km` : 'N/A'}
+              </dd>
+              
+              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Points Matched</dt>
+              <dd className="font-mono text-text-primary text-right">
+                {selectedEvidenceCase?.statistics?.valid_count ?? 'N/A'}
+              </dd>
+              
+              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Alignment</dt>
+              <dd className="font-mono text-text-primary text-right">
+                {selectedEvidenceCase?.provenance?.profile_alignment_method || 'N/A'}
+              </dd>
+              
+              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Model Dataset</dt>
+              <dd className="font-mono text-text-primary text-right">
+                {selectedEvidenceCase?.provenance?.model_dataset || 'N/A'}
+              </dd>
            </dl>
         </div>
+
       </div>
     </aside>
   );
 };
+

@@ -29,25 +29,25 @@
   --spacing-space-12: var(--space-12);
 }
 
-:root, [data-theme="light"] {
-  /* Surface colors (Warm off-white base) */
-  --surface-base: #F6F4EF;
-  --surface-raised: #EDEAE2;
-  --surface-overlay: #E3DFD5;
+:root {
+  /* Surface colors (Dark graphite base as primary) */
+  --surface-base: #111213;
+  --surface-raised: #18191B;
+  --surface-overlay: #202224;
   
   /* Text colors */
-  --text-primary: #1E1F20;
-  --text-secondary: #4A4D50;
-  --text-muted: #7E848A;
+  --text-primary: #F2F0E9; /* warm off-white */
+  --text-secondary: #9FA4A9;
+  --text-muted: #6B7075;
   
   /* Accents and States */
-  --accent-interactive: #3D7A85; /* darker teal */
-  --accent-interactive-hover: #2E6068;
-  --accent-warning: #B85C3E;
+  --accent-interactive: #46848A; /* muted teal */
+  --accent-interactive-hover: #56A3AB;
+  --accent-warning: #C26344; /* muted rust / burnt orange */
   
   /* Borders and Lines */
-  --border-subtle: #DAD5C9;
-  --border-strong: #C2BCAC;
+  --border-subtle: #292C30;
+  --border-strong: #3F444A;
   
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -64,27 +64,6 @@
   --space-12: 4.5rem;  /* 72px */
 }
 
-[data-theme="dark"] {
-  /* Surface colors (Dark graphite base as primary) */
-  --surface-base: #1B1D1F;
-  --surface-raised: #2A2D30;
-  --surface-overlay: #35383B;
-  
-  /* Text colors */
-  --text-primary: #EAEAEA;
-  --text-secondary: #B0B5B9;
-  --text-muted: #7E848A;
-  
-  /* Accents and States */
-  --accent-interactive: #5C8C96;
-  --accent-interactive-hover: #72A5AF;
-  --accent-warning: #D97757;
-  
-  /* Borders and Lines */
-  --border-subtle: #3A3E42;
-  --border-strong: #4F555A;
-}
-
 body {
   background-color: var(--surface-base);
   color: var(--text-primary);
@@ -93,5 +72,21 @@ body {
   padding: 0;
   height: 100vh;
   overflow: hidden; /* App takes full height, no global scroll */
-  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for scientific aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-overlay);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
 }
