@@ -43,7 +43,7 @@ export const BottomScrubbers: React.FC = () => {
 
   return (
     <footer className="flex-none h-24 bg-surface-base border-t border-border-subtle px-space-8 flex flex-col justify-center">
-      <div className="flex gap-space-12 w-full max-w-6xl mx-auto items-center">
+      <div className="flex gap-space-12 w-full items-center">
          {/* TIME SCRUBBER */}
          <div className="flex-1 flex flex-col gap-space-2">
            <div className="flex justify-between items-baseline mb-1">

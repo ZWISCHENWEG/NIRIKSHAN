@@ -63,8 +63,8 @@ export const InspectionPanel: React.FC = () => {
       {/* HEADER / IDENTITY */}
       <div className="pt-space-8 px-space-8 pb-space-6 flex justify-between items-start">
         <div className="flex flex-col gap-space-1">
-          <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">Float</div>
-          <h2 className="text-xl font-sans font-normal text-text-primary tracking-wide">ARGO {selectedFloatId}</h2>
+          <div className="text-[10px] font-sans font-semibold text-text-muted tracking-wide uppercase">Observation</div>
+          <h2 className="text-lg font-sans font-medium text-text-primary tracking-wide">ARGO {selectedFloatId}</h2>
         </div>
         <button 
           onClick={clearSelection}
@@ -77,41 +77,44 @@ export const InspectionPanel: React.FC = () => {
       <div className="px-space-8 flex-1 flex flex-col overflow-y-auto pb-space-8">
         
         {/* METADATA */}
-        <div className="mb-space-8 space-y-4">
-          <div>
-            <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase mb-1">Position</div>
-            <div className="text-sm font-mono text-text-primary">
+        <div className="mb-space-6 grid grid-cols-2 gap-4">
+          <div className="col-span-2">
+            <div className="text-[9px] font-sans font-semibold text-text-muted tracking-wide uppercase mb-1">Position</div>
+            <div className="text-[11px] font-mono text-text-primary">
               {selectedObservation ? `${Math.abs(selectedObservation.lat).toFixed(2)}° ${selectedObservation.lat >= 0 ? 'N' : 'S'} / ${Math.abs(selectedObservation.lon).toFixed(2)}° ${selectedObservation.lon >= 0 ? 'E' : 'W'}` : 'Unknown'}
             </div>
           </div>
           <div>
-            <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase mb-1">Observed</div>
-            <div className="text-sm font-mono text-text-primary">
+            <div className="text-[9px] font-sans font-semibold text-text-muted tracking-wide uppercase mb-1">Time</div>
+            <div className="text-[11px] font-mono text-text-primary">
               {selectedObservation ? new Date(selectedObservation.time).toUTCString().replace(' GMT', ' UTC') : 'Unknown'}
             </div>
           </div>
           <div>
-            <div className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase mb-1">Depth Range</div>
-            <div className="text-sm font-mono text-text-primary">
+            <div className="text-[9px] font-sans font-semibold text-text-muted tracking-wide uppercase mb-1">Depth Range</div>
+            <div className="text-[11px] font-mono text-text-primary">
               {selectedEvidenceCase?.observation_profile?.depths?.length ? `${Math.min(...selectedEvidenceCase.observation_profile.depths).toFixed(1)} – ${Math.max(...selectedEvidenceCase.observation_profile.depths).toFixed(1)} m` : 'Unknown'}
             </div>
           </div>
         </div>
 
-        <hr className="border-border-subtle mb-space-8" />
+        <hr className="border-border-subtle mb-space-6" />
 
         {/* PROFILE CHART SECTION */}
         <div className="mb-space-2 flex justify-between items-end">
-          <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase">Temperature Profile</h3>
+          <h3 className="text-[11px] font-sans font-semibold text-text-primary tracking-wide uppercase">Temperature Profile</h3>
+          <span className="text-[9px] font-sans text-text-muted/70 tracking-wide uppercase">Click to inspect depth</span>
         </div>
         
-        <div className="mb-space-2 text-[10px] font-sans text-text-muted flex items-center gap-space-4">
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-[1px] bg-accent-interactive block"></span> Model
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 bg-text-primary rounded-full block"></span> Observation
-          </span>
+        <div className="mb-space-2 text-[9px] font-sans text-text-muted flex items-center justify-between">
+          <div className="flex items-center gap-space-4">
+            <span className="flex items-center gap-1.5">
+              <span className="w-3 h-[1.5px] bg-accent-interactive block"></span> Model
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-text-primary rounded-full block"></span> Observation
+            </span>
+          </div>
         </div>
         
         <div className="flex flex-row gap-4 flex-1 min-h-[350px] -mx-4 px-4">
@@ -203,25 +206,30 @@ export const InspectionPanel: React.FC = () => {
           </div>
         </div>
 
-          <div className="flex justify-between items-center bg-surface-raised px-space-4 py-space-3 rounded-sm">
-            <span className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">Mean Bias (Obs − Model)</span>
-            <span className="text-xs font-mono text-text-primary">
-              {selectedEvidenceCase?.statistics?.bias !== undefined ? `${selectedEvidenceCase.statistics.bias > 0 ? '+' : ''}${selectedEvidenceCase.statistics.bias.toFixed(2)} °C` : 'N/A'}
-            </span>
+          <div className="grid grid-cols-2 gap-4 mt-space-2 mb-space-4">
+            <div className="flex flex-col">
+              <span className="text-[9px] font-sans font-semibold text-text-muted tracking-wide uppercase mb-0.5">Mean Bias (Obs − Model)</span>
+              <span className="text-[11px] font-mono text-text-primary">
+                {selectedEvidenceCase?.statistics?.bias !== undefined ? `${selectedEvidenceCase.statistics.bias > 0 ? '+' : ''}${selectedEvidenceCase.statistics.bias.toFixed(2)} °C` : 'N/A'}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[9px] font-sans font-semibold text-text-muted tracking-wide uppercase mb-0.5">RMSE</span>
+              <span className="text-[11px] font-mono text-text-primary">
+                {selectedEvidenceCase?.statistics?.rmse !== undefined ? `${selectedEvidenceCase.statistics.rmse.toFixed(2)} °C` : 'N/A'}
+              </span>
+            </div>
           </div>
 
-          <div className="flex justify-between items-center bg-surface-raised px-space-4 py-space-3 rounded-sm mt-space-2">
-            <span className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">RMSE</span>
-            <span className="text-xs font-mono text-text-primary">
-              {selectedEvidenceCase?.statistics?.rmse !== undefined ? `${selectedEvidenceCase.statistics.rmse.toFixed(2)} °C` : 'N/A'}
-            </span>
-          </div>
-
-        <hr className="border-border-subtle my-space-8" />
+        <hr className="border-border-subtle my-space-6" />
 
         {/* RESIDUAL PROFILE */}
         <div className="mb-space-2 flex justify-between items-end">
-          <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase">Residual Profile</h3>
+          <div className="flex flex-col">
+            <h3 className="text-[11px] font-sans font-semibold text-text-primary tracking-wide uppercase mb-0.5">Residual</h3>
+            <span className="text-[9px] font-mono text-text-muted">Observation − Model</span>
+          </div>
+          <span className="text-[9px] font-sans text-text-muted/70 tracking-wide uppercase">Click to inspect depth</span>
         </div>
         
         <div className="flex-1 min-h-[200px] -mx-4 mb-space-6">
@@ -297,36 +305,45 @@ export const InspectionPanel: React.FC = () => {
           )}
         </div>
 
-        <hr className="border-border-subtle my-space-8" />
+        <hr className="border-border-subtle my-space-6" />
 
         {/* ANALYTICAL READOUT */}
         {selectedEvidenceCase && analyticalCursor.depth !== null && (
-          <div className="mb-space-8">
-            <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase mb-space-4">Analytical Cursor</h3>
+          <div className="mb-space-6">
+            <h3 className="text-[11px] font-sans font-semibold text-text-primary tracking-wide uppercase mb-space-3">Analytical Cursor</h3>
             <AnalyticalReadout evidenceCase={selectedEvidenceCase} />
           </div>
         )}
 
-        <hr className="border-border-subtle my-space-8" />
+        {selectedEvidenceCase && analyticalCursor.depth !== null && (
+          <hr className="border-border-subtle my-space-6" />
+        )}
 
         {/* DERIVED FEATURES */}
         {selectedEvidenceCase?.features && selectedEvidenceCase.features.length > 0 && (
-          <div className="mb-space-8">
-            <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase mb-space-4">Derived Features</h3>
-            <div className="space-y-2">
+          <div className="mb-space-6">
+            <h3 className="text-[11px] font-sans font-semibold text-text-primary tracking-wide uppercase mb-space-4">
+              Derived Features
+            </h3>
+            <div className="space-y-4 relative border-l border-border-subtle pl-4 ml-1">
               {selectedEvidenceCase.features.map(feature => (
-                <div key={feature.feature_id} className="flex flex-col bg-surface-raised px-space-4 py-space-3 rounded-sm">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-[10px] font-sans font-medium text-text-muted tracking-widest uppercase">{feature.feature_type.replace(/_/g, ' ')}</span>
-                    <span className="text-xs font-mono text-text-primary">
-                      {feature.value !== null ? `${feature.value.toFixed(2)} ${feature.unit}` : 'N/A'}
+                <div key={feature.feature_id} className="flex flex-col relative group">
+                  {/* Depth Marker on the timeline-like border */}
+                  <div className="absolute top-1 -left-[21px] w-2 h-2 rounded-full border-2 border-border-subtle bg-surface-base group-hover:border-accent-interactive transition-colors"></div>
+                  
+                  <div className="mb-0.5">
+                    <span className="text-[10px] font-sans font-semibold text-text-primary tracking-wide uppercase">
+                      {feature.feature_type.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-sans text-text-muted/60">{feature.method}</span>
+                  <div className="text-[11px] font-mono text-text-primary mb-1">
+                    {feature.value !== null ? `${feature.value.toFixed(2)} ${feature.unit}` : 'N/A'}
                     {feature.depth !== null && (
-                      <span className="text-[9px] font-mono text-text-muted/60">@ {feature.depth.toFixed(1)}m</span>
+                      <span className="text-[10px] text-accent-interactive ml-2">@ {feature.depth.toFixed(1)}m</span>
                     )}
+                  </div>
+                  <div className="text-[9px] font-sans text-text-muted/80">
+                    {feature.method}
                   </div>
                 </div>
               ))}
@@ -334,38 +351,33 @@ export const InspectionPanel: React.FC = () => {
           </div>
         )}
 
-        <hr className="border-border-subtle mb-space-8" />
+        <hr className="border-border-subtle mb-space-6" />
 
-        {/* TECHNICAL METADATA */}
-        <div>
-           <h3 className="text-xs font-sans font-medium text-text-primary tracking-widest uppercase mb-space-4">Technical Metadata</h3>
-           <dl className="grid grid-cols-2 gap-y-4 text-[10px]">
-              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Platform ID</dt>
-              <dd className="font-mono text-text-primary text-right">{selectedObservation?.metadata?.platform_id || selectedFloatId}</dd>
+        {/* PROVENANCE */}
+        <div className="mb-space-6">
+           <h3 className="text-[11px] font-sans font-semibold text-text-primary tracking-wide uppercase mb-space-3">Provenance</h3>
+           <dl className="grid grid-cols-2 gap-y-3 gap-x-4 text-[10px]">
+              <dt className="font-sans font-semibold text-text-muted uppercase tracking-wide">Dataset</dt>
+              <dd className="font-mono text-text-primary">{selectedEvidenceCase?.provenance?.model_dataset || 'N/A'}</dd>
               
-              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Temporal Sep.</dt>
-              <dd className="font-mono text-text-primary text-right">
+              <dt className="font-sans font-semibold text-text-muted uppercase tracking-wide">Temporal Sep.</dt>
+              <dd className="font-mono text-text-primary">
                 {selectedEvidenceCase?.model_match?.temporal_separation !== undefined ? `${selectedEvidenceCase.model_match.temporal_separation.toFixed(1)} h` : 'N/A'}
               </dd>
               
-              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Spatial Sep.</dt>
-              <dd className="font-mono text-text-primary text-right">
+              <dt className="font-sans font-semibold text-text-muted uppercase tracking-wide">Spatial Sep.</dt>
+              <dd className="font-mono text-text-primary">
                 {selectedEvidenceCase?.model_match?.spatial_separation !== undefined ? `${(selectedEvidenceCase.model_match.spatial_separation * 111).toFixed(1)} km` : 'N/A'}
               </dd>
               
-              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Points Matched</dt>
-              <dd className="font-mono text-text-primary text-right">
-                {selectedEvidenceCase?.statistics?.valid_count ?? 'N/A'}
-              </dd>
-              
-              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Alignment</dt>
-              <dd className="font-mono text-text-primary text-right">
+              <dt className="font-sans font-semibold text-text-muted uppercase tracking-wide">Match Method</dt>
+              <dd className="font-mono text-text-primary">
                 {selectedEvidenceCase?.provenance?.profile_alignment_method || 'N/A'}
               </dd>
               
-              <dt className="font-sans font-medium text-text-muted uppercase tracking-widest">Model Dataset</dt>
-              <dd className="font-mono text-text-primary text-right">
-                {selectedEvidenceCase?.provenance?.model_dataset || 'N/A'}
+              <dt className="font-sans font-semibold text-text-muted uppercase tracking-wide">Points Matched</dt>
+              <dd className="font-mono text-text-primary">
+                {selectedEvidenceCase?.statistics?.valid_count ?? 'N/A'}
               </dd>
            </dl>
         </div>

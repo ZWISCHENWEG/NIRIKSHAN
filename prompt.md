@@ -1,584 +1,518 @@
-NIRIKSHAN — IMPLEMENTATION TASK 12
-PHASE 12: DOCUMENTATION + DELIVERY PACKAGE
+# NIRIKSHAN — FINAL PRODUCT HARDENING
+# TASK 13.2 — FINAL DEMO EXPERIENCE + TYPOGRAPHY POLISH
 
-NIRIKSHAN has now completed:
+Phase 13.1 is complete.
 
-- Phase 1 Scientific Data Foundation
-- Phase 2 API Contract Stabilization
-- Phase 3 Real Model-Observation Matching
-- Phase 4 Profile & Evidence Engine
-- Phase 5 Derived Scientific Features
-- Phase 6 Water-Column Lens + Analytical Cursor
-- Phase 7 Response / SAR Workspace
-- Phase 8 Provenance + Scientific Snapshot
-- Phase 9 Performance + Rendering Hardening
-- Phase 10 Scientific Validation
-- Phase 10.1 Validation Integrity Correction
-- Phase 11 Security + Deployment
+Read:
 
-Phase 11 verification:
-
-- Backend: 30/30 tests passing
-- Frontend build: passing
-- Frontend lint: passing
-- Health endpoint implemented
-- Readiness endpoint implemented
-- Docker backend artifact created
-- CI workflow created
-- Real GLORYS12V1 + Argo pipeline preserved
-
-Now implement PHASE 12: DOCUMENTATION + DELIVERY.
-
-IMPORTANT:
-
-This is NOT a feature-development phase.
-
-Do not add new scientific capabilities.
-Do not redesign the UI.
-Do not modify SAR physics.
-Do not change the matching algorithm.
-Do not introduce AI features.
-Do not replace real data with mock data.
-
-The purpose is to make the repository understandable, reproducible, demonstrable, and SIH-ready.
-
-Use these documents as the authoritative source:
-
-docs/00_PROJECT_VISION.md
-docs/01_PRD.md
-docs/02_ARCHITECTURE.md
-docs/03_SCIENTIFIC_ENGINE.md
-docs/04_OBSERVATION_EVIDENCE.md
-docs/05_UI_UX_SYSTEM.md
-docs/06_API_CONTRACTS.md
-docs/07_DATA_PIPELINE_AND_INGESTION.md
-docs/08_INTERACTION_AND_ANALYTICAL_WORKFLOWS.md
-docs/09_PERFORMANCE_AND_RENDERING.md
-docs/10_TESTING_AND_VALIDATION.md
-docs/11_SECURITY_AND_DEPLOYMENT.md
+docs/FINAL_PRODUCT_AUDIT.md
 docs/12_DEMO_AND_PITCH_SPECIFICATION.md
-docs/13_IMPLEMENTATION_ROADMAP.md
-docs/14_REPOSITORY_AND_CODE_STRUCTURE.md
-docs/SCIENCE_VALIDATION_REPORT.md
+docs/DEMO_RUNBOOK.md
+docs/05_UI_UX_SYSTEM.md
+docs/FEATURE_STATUS.md
+docs/SCIENTIFIC_LIMITATIONS.md
 
-Also inspect the actual current repository before writing anything.
+This is the FINAL VISUAL/DEMO POLISH TASK.
 
 ==================================================
-TASK 1 — CURRENT REPOSITORY AUDIT
+CORE RULE
+==================================================
+
+DO NOT ADD NEW SCIENTIFIC CAPABILITIES.
+
+DO NOT CHANGE:
+
+- backend algorithms
+- NetCDF processing
+- GLORYS12V1 data
+- Argo data
+- model matching
+- residual calculation
+- thermocline calculation
+- MLD calculation
+- current calculations
+- SAR physics
+- snapshot serialization
+- provenance semantics
+- API contracts
+
+This task is purely about presentation,
+hierarchy, discoverability and demo flow.
+
+The existing product architecture remains:
+
+3D OCEAN
++
+RIGHT EVIDENCE / RESPONSE PANEL
++
+BOTTOM SCIENTIFIC NAVIGATION
+
+==================================================
+1. FIRST-60-SECONDS EXPERIENCE
+==================================================
+
+Audit the application from a completely fresh user perspective.
+
+Within approximately 60 seconds the user should understand:
+
+1. This is an ocean analysis platform.
+2. The map contains real observations.
+3. An observation can be selected.
+4. The observation can be compared with a model.
+5. The comparison produces measurable scientific evidence.
+6. Derived ocean features can be inspected.
+7. The same scientific context can lead into SAR response.
+
+Do NOT add onboarding modals.
+
+Do NOT add tutorials.
+
+Do NOT add tooltips everywhere.
+
+Use subtle hierarchy and microcopy only where necessary.
+
+==================================================
+2. HEADER POLISH
+==================================================
+
+Inspect the top header.
+
+Preserve the current institutional identity.
+
+Ensure these hierarchy levels are obvious:
+
+OCEAN VIEWER
+SIH26067
+
+GLOBAL OCEAN PHYSICS
+GLORYS12V1 · REANALYSIS · JAN 2024
+
+TIME
+DATA STATUS
+SAR WORKSPACE
+
+Typography should clearly distinguish:
+
+product identity
+dataset identity
+current state
+
+Avoid excessive letter spacing.
+
+Avoid oversized branding.
+
+==================================================
+3. ACTIVE FIELD
+==================================================
+
+Inspect the ACTIVE FIELD indicator.
+
+It should communicate:
+
+what variable is being visualized
++
+its unit
+
+Example:
+
+ACTIVE FIELD
+● POTENTIAL TEMPERATURE (°C)
+
+Do not turn this into a dashboard card.
+
+Keep it visually integrated with the map.
+
+==================================================
+4. INSPECTION PANEL HIERARCHY
+==================================================
+
+The right-side InspectionPanel contains a lot of scientific information.
+
+Improve hierarchy without removing information.
+
+Desired reading order:
+
+OBSERVATION
+↓
+POSITION / TIME / DEPTH
+↓
+TEMPERATURE PROFILE
+↓
+MODEL vs OBSERVATION
+↓
+RESIDUAL
+↓
+DERIVED FEATURES
+↓
+PROVENANCE
+
+The panel should feel like a scientific investigation record.
+
+Avoid making every section look like an independent card.
+
+Use:
+
+spacing
+rules
+typographic hierarchy
+small labels
+data alignment
+
+rather than decorative containers.
+
+==================================================
+5. PROFILE CHART
+==================================================
+
+The profile comparison is one of the most important
+judge-facing elements.
+
+Make the following immediately understandable:
+
+MODEL
+OBSERVATION
+
+and:
+
+temperature
+depth
+units
+
+Keep the existing Plotly visualization.
+
+Do NOT replace Plotly.
+
+Do NOT redesign the chart into a custom visualization.
+
+The existing:
+
+"Click to inspect depth"
+
+affordance should remain subtle.
+
+Ensure the analytical cursor is visually clear once activated.
+
+==================================================
+6. RESIDUAL COMMUNICATION
+==================================================
+
+The user must understand:
+
+RESIDUAL = OBSERVATION − MODEL
+
+Do not add a giant equation.
+
+Use a small scientific caption or metadata label near
+the residual chart if needed.
+
+Make zero visually understandable.
+
+Positive and negative residuals should remain visually
+distinct.
+
+Do not change scientific color semantics.
+
+==================================================
+7. DERIVED FEATURES
 ==================================================
 
 Inspect:
 
-README.md
-package.json
-backend/
-src/
-docs/
-.env.example
-.gitignore
-.github/
-backend/Dockerfile
-backend/requirements.txt
+THERMOCLINE
+MLD
+CURRENT SPEED
+CURRENT DIRECTION
+CURRENT SHEAR
 
-Do not assume that the documentation matches the current implementation.
+The goal is not to make them larger.
 
-Use the actual repository as the source of truth for:
+The goal is to make them easier to scan.
 
-- commands
-- paths
-- API endpoints
-- environment variables
-- deployment behavior
-- test commands
-- dataset locations
+Use a consistent structure:
+
+FEATURE NAME
+value + unit
+one-line scientific description
+
+Example structure:
+
+THERMOCLINE
+85.09 m
+Maximum vertical temperature gradient
+
+MLD
+29.44 m
+Temperature-threshold mixed-layer estimate
+
+Do not fabricate descriptions.
+
+Use only information already supported by the backend
+and documentation.
+
+Keep the existing depth relationship introduced in 13.1.
 
 ==================================================
-TASK 2 — FINAL README
+8. PROVENANCE
 ==================================================
 
-Rewrite README.md into a professional project README.
+Make PROVENANCE feel like part of the scientific result,
+not an afterthought.
 
-The README must explain:
-
-1. NIRIKSHAN
-2. One-sentence product description
-3. SIH problem statement SIH26067
-4. Problem being solved
-5. Product workflow:
-
-SEE
-→ SELECT
-→ VERIFY
-→ COMPARE
-→ UNDERSTAND
-→ SIMULATE
-→ REPLAY
-→ TRACE
-
-6. Key capabilities
-7. Scientific datasets
-8. Architecture overview
-9. Technology stack
-10. Repository structure
-11. Local development
-12. Backend startup
-13. Frontend startup
-14. Environment configuration
-15. Dataset setup
-16. Testing
-17. Build
-18. Lint
-19. Docker
-20. Health/readiness endpoints
-21. Scientific limitations
-22. Demo workflow
-23. Team information
-
-Do not claim capabilities that are not implemented.
+Preserve compactness.
 
 Clearly distinguish:
 
-IMPLEMENTED
-from
-FUTURE / ROADMAP
+DATASET
+TEMPORAL SEPARATION
+SPATIAL SEPARATION
+MATCH METHOD
+POINTS MATCHED
+
+Do not create a giant provenance panel.
+
+Do not duplicate provenance elsewhere.
 
 ==================================================
-TASK 3 — QUICKSTART
+9. SAR RESPONSE TRANSITION
 ==================================================
 
-Create:
+Inspect the transition:
 
-docs/QUICKSTART.md
+ANALYSIS
+→
+SAR WORKSPACE
 
-It should allow a new developer to understand the minimum steps required to run NIRIKSHAN locally.
+The current "SAR WORKSPACE →" treatment should remain.
 
-Include exact commands based on the current repository.
+Ensure the user can understand that this is a transition
+from analysis to response.
 
-Include:
+When SAR mode is active, make the response state obvious
+without using dramatic visual effects.
 
-Frontend:
-npm install
-npm run dev
-
-Backend:
-appropriate existing virtual environment/dependency setup
-appropriate uvicorn command
-
-Environment:
-.env.example → .env instructions
-
-Datasets:
-where the real GLORYS and Argo datasets must exist
-
-Verification:
-health
-readiness
-frontend
-backend tests
-
-Do not invent commands.
+The response workspace should visually feel like the same
+application entering a different operational mode.
 
 ==================================================
-TASK 4 — DEPLOYMENT GUIDE
+10. BOTTOM NAVIGATION
 ==================================================
 
-Create:
+The 13.1 layout correction must remain.
 
-docs/DEPLOYMENT_GUIDE.md
+Verify:
 
-Use docs/11_SECURITY_AND_DEPLOYMENT.md and the actual implementation.
+TEMPORAL NAVIGATION
+and
+DEPTH NAVIGATION
 
-Document:
+have balanced visual weight.
 
-- frontend deployment
-- backend deployment
-- Docker
-- NetCDF dataset mounting
-- environment variables
-- CORS
-- health
-- readiness
-- production startup
-- CI
-- secrets handling
-- rollback considerations
-- dataset management
+Ensure:
 
-Clearly state that Copernicus credentials are NOT required at runtime for the current SIH demo when using the packaged/externally mounted validated datasets.
+current date
+current depth
+range endpoints
 
-Do not include real credentials.
+remain readable.
+
+Do not increase the footer height.
 
 ==================================================
-TASK 5 — SCIENTIFIC DATA GUIDE
+11. TYPOGRAPHY PASS
 ==================================================
 
-Create:
+Perform a restrained typography pass.
 
-docs/DATASET_GUIDE.md
+Use the existing typography system.
 
-Document the actual datasets:
+Prioritize:
 
-GLORYS12V1
-argo_bob.nc
+- hierarchy
+- readable values
+- consistent labels
+- consistent units
+- alignment
+- spacing
 
-For each, document:
+Do NOT:
 
-- role
-- source identity
-- variables
-- spatial extent
-- temporal extent
-- depth representation
-- format
-- how NIRIKSHAN uses it
-- provenance identifier
-- limitations
+- introduce another font
+- use giant headings
+- use decorative typography
+- overuse uppercase
+- increase tracking everywhere
 
-Use actual repository metadata.
-
-Do not invent additional datasets.
+Scientific values should be easy to scan.
 
 ==================================================
-TASK 6 — API REFERENCE
+12. SPACING PASS
 ==================================================
 
-Create:
+Check:
 
-docs/API_REFERENCE.md
+header
+map labels
+right panel
+profile charts
+derived features
+provenance
+bottom navigation
 
-Document the currently implemented API endpoints.
+Look for:
 
-At minimum:
+- unnecessary gaps
+- cramped labels
+- inconsistent vertical rhythm
+- misaligned values
+- inconsistent section spacing
 
-GET /health
-GET /ready
-GET /api/observations
-GET /api/model-field
-GET /api/profile
-GET /api/evidence/{observation_id}
-GET /api/sar/drift
-
-For each:
-
-- purpose
-- parameters
-- response structure
-- scientific meaning
-- error behavior
-- important limitations
-
-Keep it aligned with the actual Pydantic/TypeScript contracts.
-
-Do not invent endpoints.
+Make small corrections only.
 
 ==================================================
-TASK 7 — DEMO RUNBOOK
+13. WIDE-SCREEN / LAPTOP CHECK
 ==================================================
 
-Create:
+Verify at:
 
-docs/DEMO_RUNBOOK.md
+A. approximately 1440×900
+B. approximately 1920×1080
+C. laptop-sized viewport
 
-This is extremely important for SIH.
+Ensure:
 
-Build the exact judge demonstration sequence from:
-
-docs/12_DEMO_AND_PITCH_SPECIFICATION.md
-
-The runbook should contain:
-
-PRE-DEMO CHECK
-00:00 — Opening
-00:20 — 3D exploration
-01:00 — Observation selection
-01:30 — Evidence
-02:00 — Profile comparison
-02:30 — Derived features
-03:00 — Current field
-03:20 — SAR response
-04:00 — Provenance
-04:30 — Closing
-
-Use the actual current UI.
-
-For every step specify:
-
-- what the presenter clicks
-- what appears
-- what should be said
-- what scientific point is being demonstrated
-
-Do not invent UI controls that do not exist.
+- map remains dominant
+- right panel remains usable
+- bottom navigation remains balanced
+- no large dead regions
+- no panel overlap
+- no text clipping
 
 ==================================================
-TASK 8 — DEMO FAILURE RECOVERY
+14. DEMO FLOW VERIFICATION
 ==================================================
 
-Add a section to DEMO_RUNBOOK.md covering:
+Run the exact intended judge sequence:
 
-- backend unavailable
-- dataset unavailable
-- observation unavailable
-- SAR unavailable
-- slow loading
-- browser/WebGL issue
-- API error
+OPEN
+↓
+EXPLORE
+↓
+SELECT ARGO
+↓
+VERIFY
+↓
+COMPARE
+↓
+UNDERSTAND
+↓
+SIMULATE
+↓
+REPLAY
+↓
+TRACE
 
-Use graceful degradation already supported by the application.
+Verify that each transition is visually obvious.
 
-Do not fabricate fallback science.
+Do not add fake transitions.
 
-If a feature cannot be demonstrated without real data, say so.
+Do not add automatic animation purely for presentation.
 
 ==================================================
-TASK 9 — FEATURE STATUS MATRIX
+15. SCIENTIFIC REGRESSION
 ==================================================
 
-Create:
+Confirm this task has not changed:
 
-docs/FEATURE_STATUS.md
-
-Create a clear matrix:
-
-IMPLEMENTED
-VALIDATED
-PARTIALLY IMPLEMENTED
-FUTURE
-
-Include major capabilities such as:
-
-- 3D globe
-- GLORYS model field
-- Argo observations
-- model-observation matching
-- profile comparison
-- residuals
+- GLORYS values
+- Argo values
+- model matching
+- residual = observation - model
 - thermocline
 - MLD
-- current vectors
+- current speed
+- current direction
 - current shear
-- Water-Column Lens
-- analytical cursor
-- SAR
-- response replay
+- SAR trajectory
+- SAR integration
 - provenance
-- snapshots
-- performance optimizations
-- multi-model support
-- Glider
-- CTD
-- BGC
-- WMS/WCS
-- OPeNDAP
-- global scaling
-- AI explanation
-
-Do not exaggerate the implemented feature set.
+- snapshot state
 
 ==================================================
-TASK 10 — SCIENTIFIC LIMITATIONS
-==================================================
-
-Create:
-
-docs/SCIENTIFIC_LIMITATIONS.md
-
-Consolidate the limitations from:
-
-03_SCIENTIFIC_ENGINE.md
-10_TESTING_AND_VALIDATION.md
-SCIENCE_VALIDATION_REPORT.md
-
-At minimum document:
-
-- nearest-neighbour model matching
-- no sub-grid interpolation
-- SAR passive-particle assumption
-- Euler integration
-- absence of windage/leeway
-- absence of wave/Stokes drift
-- limited regional/time subset
-- observation sparsity
-- uncertainty limitations
-
-Use careful scientific language.
-
-Do not make the prototype appear operationally equivalent to an operational SAR system.
-
-==================================================
-TASK 11 — PITCH FACT SHEET
-==================================================
-
-Create:
-
-docs/PITCH_FACT_SHEET.md
-
-This is NOT a marketing hype document.
-
-Create a factual one-page style summary containing:
-
-Problem
-Solution
-How it works
-Scientific foundation
-Key differentiators
-Technology
-Implemented capabilities
-Disaster-management relevance
-Limitations
-Future expansion
-Team
-
-Use terminology consistent with the existing pitch specification.
-
-Do not claim superiority over other tools.
-
-==================================================
-TASK 12 — JUDGE Q&A
-==================================================
-
-Create:
-
-docs/JUDGE_QA.md
-
-Prepare factual answers for likely judge questions:
-
-1. What problem are you solving?
-2. Why 3D?
-3. Why Cesium?
-4. Why Three.js?
-5. Why xarray?
-6. What is GLORYS12V1?
-7. What is Argo?
-8. How do you match observations to model data?
-9. How do you calculate residual?
-10. How do you calculate thermocline?
-11. How is MLD calculated?
-12. How does SAR work?
-13. Is SAR operational?
-14. What is actually real data?
-15. Where is AI?
-16. Why not use a chatbot?
-17. How do you handle missing data?
-18. How do you handle uncertainty?
-19. How does the system scale?
-20. What happens if the dataset changes?
-21. Why browser-based?
-22. How is provenance maintained?
-23. What is implemented vs future?
-24. What are the current limitations?
-
-Answers must be factual and derived from the existing documentation.
-
-==================================================
-TASK 13 — TEAM DELIVERY CHECKLIST
-==================================================
-
-Create:
-
-docs/FINAL_DELIVERY_CHECKLIST.md
-
-Include:
-
-CODE
-DATA
-SECURITY
-TESTING
-BUILD
-DEPLOYMENT
-DEMO
-PITCH
-PRESENTATION
-BACKUP
-
-Each item should have:
-
-[ ] / [x]
-
-Only mark something [x] when the repository actually proves it.
-
-==================================================
-TASK 14 — README CONSISTENCY
-==================================================
-
-After creating all documentation, cross-check:
-
-README.md
-docs/QUICKSTART.md
-docs/DEPLOYMENT_GUIDE.md
-docs/API_REFERENCE.md
-docs/DATASET_GUIDE.md
-docs/DEMO_RUNBOOK.md
-docs/FEATURE_STATUS.md
-docs/SCIENTIFIC_LIMITATIONS.md
-docs/PITCH_FACT_SHEET.md
-docs/JUDGE_QA.md
-docs/FINAL_DELIVERY_CHECKLIST.md
-
-Against the actual code.
-
-Remove contradictions.
-
-Do not silently invent missing capabilities.
-
-==================================================
-TASK 15 — VERIFICATION
+16. VALIDATION
 ==================================================
 
 Run:
 
-PYTHONPATH=backend pytest backend/tests
+PYTHONPATH=backend pytest backend/tests/
 
 npm run build
 
 npm run lint
 
-If the repository has a verification script, run it too.
+Then manually verify:
 
-Do not change scientific code merely to make documentation pass.
-
-==================================================
-STRICT RULES
-==================================================
-
-DO NOT:
-
-- add new scientific features
-- redesign UI
-- modify SAR physics
-- change matching algorithm
-- add fake AI
-- fabricate performance numbers
-- fabricate benchmark results
-- fabricate datasets
-- claim operational forecasting capability
-- claim operational SAR capability
-- claim unsupported integrations
-- delete tests
-- weaken tests
-
-Documentation must describe the product that actually exists.
+1. application launch
+2. map rendering
+3. observation selection
+4. EvidenceCase
+5. profile comparison
+6. residual
+7. analytical cursor
+8. derived features
+9. SAR WORKSPACE
+10. SAR replay
+11. return to analysis
+12. snapshot capture
+13. snapshot restoration
 
 ==================================================
-FINAL REPORT
+17. DO NOT DO
 ==================================================
 
-Return:
+Do NOT:
 
-A. README result
-B. Documentation files created
-C. Documentation files modified
-D. Implemented-vs-future consistency result
-E. API documentation result
-F. Dataset documentation result
-G. Demo runbook result
-H. Judge Q&A result
-I. Final delivery checklist result
-J. Backend test result
-K. Frontend build result
-L. Frontend lint result
-M. Remaining documentation gaps
-N. Whether Phase 12 is complete
-O. Recommended NEXT SINGLE TASK
+- rewrite App.tsx
+- replace Cesium
+- replace Plotly
+- replace Zustand
+- redesign the entire panel
+- introduce a dashboard layout
+- add AI chatbot functionality
+- add fake confidence scores
+- add fake alerts
+- add fake forecasts
+- add new datasets
+- add authentication
+- add collaboration
+- add new backend services
 
-STOP AFTER PHASE 12.
+This is the final polish pass.
+
+==================================================
+18. REPORT
+==================================================
+
+At completion provide:
+
+A. First-60-seconds result
+B. Header hierarchy changes
+C. Inspection panel changes
+D. Profile chart changes
+E. Residual presentation changes
+F. Derived feature changes
+G. Provenance changes
+H. SAR transition changes
+I. Typography changes
+J. Responsive verification
+K. Demo workflow verification
+L. Scientific regression verification
+M. Backend test result
+N. Frontend build result
+O. Frontend lint result
+P. Files changed
+Q. Remaining issues
+R. Recommended next SINGLE task
+
+Then STOP.
+
+Do not automatically begin another implementation phase.
