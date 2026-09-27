@@ -13,7 +13,8 @@
 ## DATA
 - [x] GLORYS12V1 NetCDF dataset validated and tested
 - [x] Argo float NetCDF dataset validated and tested
-- [x] Data `.gitignore` correctly ignores raw `*.nc` files
+- [x] Large GLORYS12V1 NetCDF (~208 MB) excluded from Git via `*.nc` rule
+- [x] Small Argo subset (`argo_bob.nc`, ~188 KB) intentionally tracked for demo reproducibility
 
 ## SECURITY
 - [x] Secrets removed from source code

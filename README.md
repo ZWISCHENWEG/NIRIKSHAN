@@ -37,7 +37,7 @@ NIRIKSHAN is composed of a Vite/React frontend and a FastAPI/Python backend. The
 
 ## Technology Stack
 - **Frontend:** TypeScript, React, Vite, CesiumJS, Carto
-- **Backend:** Python 3.11, FastAPI, Xarray, Numpy, Pytest
+- **Backend:** Python 3.11+ (Docker: 3.11, Dev: 3.14), FastAPI, Xarray, Numpy, Pytest
 - **Infrastructure:** Docker, GitHub Actions CI
 
 ## Repository Structure
