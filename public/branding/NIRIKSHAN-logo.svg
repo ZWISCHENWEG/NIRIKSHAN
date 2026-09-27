@@ -1,0 +1,6 @@
+<svg width="240" height="48" viewBox="0 0 240 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 10H18L30 28.5V10H36V38H30L18 19.5V38H12V10Z" fill="currentColor"/>
+  <circle cx="21" cy="28" r="3" fill="#8AC6D0"/>
+  <circle cx="27" cy="20" r="3" fill="#8AC6D0"/>
+  <text x="52" y="32" font-family="system-ui, sans-serif" font-weight="700" font-size="22" letter-spacing="0.1em" fill="currentColor">NIRIKSHAN</text>
+</svg>

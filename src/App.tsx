@@ -19,9 +19,12 @@ function App() {
     <div className="flex flex-col h-screen w-full bg-surface-base text-text-primary font-sans">
       {/* GLOBAL SYSTEM BAR */}
       <header className="flex-none h-12 bg-surface-base border-b border-border-subtle flex items-center justify-between px-space-6 z-20">
-        <div className="flex flex-col justify-center">
-          <h1 className="text-xs font-semibold tracking-wide text-text-primary uppercase">Ocean Viewer</h1>
-          <span className="text-[10px] font-mono text-text-muted">SIH26067</span>
+        <div className="flex items-center gap-space-4">
+          <img src="/branding/NIRIKSHAN-mark.svg" alt="NIRIKSHAN Logo" className="h-6 w-6 text-accent-interactive" />
+          <div className="flex flex-col justify-center">
+            <h1 className="text-sm font-bold tracking-widest text-text-primary">NIRIKSHAN</h1>
+            <span className="text-[9px] font-sans font-medium tracking-widest text-text-muted uppercase">3D Ocean Analysis / Response Workspace</span>
+          </div>
         </div>
         
         <div className="flex flex-col items-center">

@@ -1,518 +1,525 @@
-# NIRIKSHAN — FINAL PRODUCT HARDENING
-# TASK 13.2 — FINAL DEMO EXPERIENCE + TYPOGRAPHY POLISH
+I want to make a FINAL BRANDING + VISUAL IDENTITY PASS on the existing NIRIKSHAN ocean visualization prototype.
 
-Phase 13.1 is complete.
+IMPORTANT:
+This is NOT a feature-development task.
+This is NOT a redesign of the scientific application.
+Do NOT change scientific logic, calculations, data, APIs, workflows, routes, SAR methodology, model/observation matching, persistence, or existing functionality.
 
-Read:
+The goal is to transform the current product identity from:
 
-docs/FINAL_PRODUCT_AUDIT.md
-docs/12_DEMO_AND_PITCH_SPECIFICATION.md
-docs/DEMO_RUNBOOK.md
-docs/05_UI_UX_SYSTEM.md
-docs/FEATURE_STATUS.md
-docs/SCIENTIFIC_LIMITATIONS.md
+NIRIKSHAN
 
-This is the FINAL VISUAL/DEMO POLISH TASK.
+to:
 
-==================================================
-CORE RULE
-==================================================
+NIRIKSHAN
 
-DO NOT ADD NEW SCIENTIFIC CAPABILITIES.
-
-DO NOT CHANGE:
-
-- backend algorithms
-- NetCDF processing
-- GLORYS12V1 data
-- Argo data
-- model matching
-- residual calculation
-- thermocline calculation
-- MLD calculation
-- current calculations
-- SAR physics
-- snapshot serialization
-- provenance semantics
-- API contracts
-
-This task is purely about presentation,
-hierarchy, discoverability and demo flow.
-
-The existing product architecture remains:
-
-3D OCEAN
-+
-RIGHT EVIDENCE / RESPONSE PANEL
-+
-BOTTOM SCIENTIFIC NAVIGATION
+while making the interface feel like a serious, premium, institutional scientific product suitable for a Smart India Hackathon final demonstration.
 
 ==================================================
-1. FIRST-60-SECONDS EXPERIENCE
+1. PRODUCT NAME
 ==================================================
 
-Audit the application from a completely fresh user perspective.
+Replace the USER-FACING product name:
 
-Within approximately 60 seconds the user should understand:
+NIRIKSHAN
 
-1. This is an ocean analysis platform.
-2. The map contains real observations.
-3. An observation can be selected.
-4. The observation can be compared with a model.
-5. The comparison produces measurable scientific evidence.
-6. Derived ocean features can be inspected.
-7. The same scientific context can lead into SAR response.
+with:
 
-Do NOT add onboarding modals.
-
-Do NOT add tutorials.
-
-Do NOT add tooltips everywhere.
-
-Use subtle hierarchy and microcopy only where necessary.
-
-==================================================
-2. HEADER POLISH
-==================================================
-
-Inspect the top header.
-
-Preserve the current institutional identity.
-
-Ensure these hierarchy levels are obvious:
-
-OCEAN VIEWER
-SIH26067
-
-GLOBAL OCEAN PHYSICS
-GLORYS12V1 · REANALYSIS · JAN 2024
-
-TIME
-DATA STATUS
-SAR WORKSPACE
-
-Typography should clearly distinguish:
-
-product identity
-dataset identity
-current state
-
-Avoid excessive letter spacing.
-
-Avoid oversized branding.
-
-==================================================
-3. ACTIVE FIELD
-==================================================
-
-Inspect the ACTIVE FIELD indicator.
-
-It should communicate:
-
-what variable is being visualized
-+
-its unit
-
-Example:
-
-ACTIVE FIELD
-● POTENTIAL TEMPERATURE (°C)
-
-Do not turn this into a dashboard card.
-
-Keep it visually integrated with the map.
-
-==================================================
-4. INSPECTION PANEL HIERARCHY
-==================================================
-
-The right-side InspectionPanel contains a lot of scientific information.
-
-Improve hierarchy without removing information.
-
-Desired reading order:
-
-OBSERVATION
-↓
-POSITION / TIME / DEPTH
-↓
-TEMPERATURE PROFILE
-↓
-MODEL vs OBSERVATION
-↓
-RESIDUAL
-↓
-DERIVED FEATURES
-↓
-PROVENANCE
-
-The panel should feel like a scientific investigation record.
-
-Avoid making every section look like an independent card.
+NIRIKSHAN
 
 Use:
 
-spacing
-rules
-typographic hierarchy
-small labels
-data alignment
+NIRIKSHAN
 
-rather than decorative containers.
+as the primary brand name.
 
-==================================================
-5. PROFILE CHART
-==================================================
+Do a careful repository-wide audit for user-facing occurrences of NIRIKSHAN.
 
-The profile comparison is one of the most important
-judge-facing elements.
+Update occurrences in:
+- application header
+- logo/wordmark
+- browser title
+- visible metadata
+- landing/opening state
+- empty states
+- demo-facing copy
+- visible documentation references
+- user-facing accessibility labels where appropriate
+- any other visible product branding
 
-Make the following immediately understandable:
+DO NOT blindly rename internal identifiers, API fields, scientific IDs, filenames, variables, routes, database keys, or code identifiers if doing so could break functionality.
 
-MODEL
-OBSERVATION
-
-and:
-
-temperature
-depth
-units
-
-Keep the existing Plotly visualization.
-
-Do NOT replace Plotly.
-
-Do NOT redesign the chart into a custom visualization.
-
-The existing:
-
-"Click to inspect depth"
-
-affordance should remain subtle.
-
-Ensure the analytical cursor is visually clear once activated.
+The scientific engine and implementation should remain untouched.
 
 ==================================================
-6. RESIDUAL COMMUNICATION
+2. BRAND POSITIONING
 ==================================================
 
-The user must understand:
+NIRIKSHAN should feel like:
 
-RESIDUAL = OBSERVATION − MODEL
+A professional ocean intelligence / scientific analysis workspace.
 
-Do not add a giant equation.
+The visual identity should communicate:
 
-Use a small scientific caption or metadata label near
-the residual chart if needed.
+- observation
+- analysis
+- evidence
+- decision support
+- scientific precision
+- institutional trust
+- ocean/environmental intelligence
 
-Make zero visually understandable.
+Avoid making it look like:
+- an AI startup
+- a gaming application
+- a futuristic cyber interface
+- a generic SaaS dashboard
+- a crypto/Web3 product
+- a sci-fi HUD
 
-Positive and negative residuals should remain visually
-distinct.
-
-Do not change scientific color semantics.
-
-==================================================
-7. DERIVED FEATURES
-==================================================
-
-Inspect:
-
-THERMOCLINE
-MLD
-CURRENT SPEED
-CURRENT DIRECTION
-CURRENT SHEAR
-
-The goal is not to make them larger.
-
-The goal is to make them easier to scan.
-
-Use a consistent structure:
-
-FEATURE NAME
-value + unit
-one-line scientific description
-
-Example structure:
-
-THERMOCLINE
-85.09 m
-Maximum vertical temperature gradient
-
-MLD
-29.44 m
-Temperature-threshold mixed-layer estimate
-
-Do not fabricate descriptions.
-
-Use only information already supported by the backend
-and documentation.
-
-Keep the existing depth relationship introduced in 13.1.
+The product should look like something that could realistically be used by:
+- oceanographers
+- INCOIS scientists
+- disaster-management teams
+- researchers
+- operational analysts
 
 ==================================================
-8. PROVENANCE
+3. LOGO / WORDMARK
 ==================================================
 
-Make PROVENANCE feel like part of the scientific result,
-not an afterthought.
+Create a proper NIRIKSHAN logo.
 
-Preserve compactness.
+This should NOT simply be text saying "NIRIKSHAN".
 
-Clearly distinguish:
+Design a minimal geometric symbol/mark that can work independently from the wordmark.
 
-DATASET
-TEMPORAL SEPARATION
-SPATIAL SEPARATION
-MATCH METHOD
-POINTS MATCHED
+Preferred conceptual direction:
 
-Do not create a giant provenance panel.
+A geometric "N" / observation mark inspired subtly by:
+- ocean current flow
+- scientific observation
+- depth layers
+- navigation
+- analytical convergence
+- a point being transformed into a decision
 
-Do not duplicate provenance elsewhere.
+The concept should remain abstract and sophisticated.
 
-==================================================
-9. SAR RESPONSE TRANSITION
-==================================================
+DO NOT literally draw:
+- a cartoon wave
+- a globe icon
+- a satellite
+- a compass
+- an AI brain
+- a robot
+- a generic analytics graph
 
-Inspect the transition:
+The logo should be:
 
-ANALYSIS
-→
-SAR WORKSPACE
+- minimal
+- geometric
+- intelligent
+- institutional
+- memorable
+- scalable
+- recognizable at small sizes
 
-The current "SAR WORKSPACE →" treatment should remain.
+Think closer to the identity system of a serious scientific/engineering organization than a startup logo.
 
-Ensure the user can understand that this is a transition
-from analysis to response.
+Create:
+1. primary logo
+2. compact icon/mark
+3. wordmark treatment
+4. monochrome version if useful
 
-When SAR mode is active, make the response state obvious
-without using dramatic visual effects.
+The logo must work on both dark and light backgrounds.
 
-The response workspace should visually feel like the same
-application entering a different operational mode.
+Do not use:
+- gradients
+- glow
+- glass effects
+- 3D effects
+- excessive rounded shapes
+- neon colors
+- decorative particles
 
-==================================================
-10. BOTTOM NAVIGATION
-==================================================
-
-The 13.1 layout correction must remain.
-
-Verify:
-
-TEMPORAL NAVIGATION
-and
-DEPTH NAVIGATION
-
-have balanced visual weight.
-
-Ensure:
-
-current date
-current depth
-range endpoints
-
-remain readable.
-
-Do not increase the footer height.
+Keep the geometry extremely clean.
 
 ==================================================
-11. TYPOGRAPHY PASS
+4. TYPOGRAPHY
 ==================================================
 
-Perform a restrained typography pass.
+I have uploaded the font file:
 
-Use the existing typography system.
+cbs_font-sans-variable.woff2
 
-Prioritize:
+Use this exact uploaded font as the primary NIRIKSHAN interface typeface.
 
-- hierarchy
-- readable values
-- consistent labels
-- consistent units
-- alignment
-- spacing
+Add it to the project's public asset structure.
 
-Do NOT:
+For example:
 
-- introduce another font
-- use giant headings
-- use decorative typography
-- overuse uppercase
-- increase tracking everywhere
+public/
+  fonts/
+    cbs-font-sans-variable.woff2
 
-Scientific values should be easy to scan.
+Create a proper @font-face declaration.
 
-==================================================
-12. SPACING PASS
-==================================================
+Use a clear family name such as:
 
-Check:
+"NIRIKSHAN Sans"
 
-header
-map labels
-right panel
-profile charts
-derived features
-provenance
-bottom navigation
+or another appropriate internal family name.
 
-Look for:
+Make sure the variable font is used correctly.
 
-- unnecessary gaps
-- cramped labels
-- inconsistent vertical rhythm
-- misaligned values
-- inconsistent section spacing
+Use this font for:
+- product branding
+- headings
+- navigation
+- buttons
+- interface labels
+- descriptive UI text
+- important numbers where appropriate
 
-Make small corrections only.
+If the existing monospace typeface is being used for:
+- coordinates
+- scientific values
+- timestamps
+- dataset identifiers
+- technical metadata
 
-==================================================
-13. WIDE-SCREEN / LAPTOP CHECK
-==================================================
+you may KEEP the monospace font there.
 
-Verify at:
+The goal is not to remove the scientific/data typography hierarchy.
 
-A. approximately 1440×900
-B. approximately 1920×1080
-C. laptop-sized viewport
+Typography should feel:
+- precise
+- modern
+- restrained
+- highly legible
+- institutional
 
-Ensure:
-
-- map remains dominant
-- right panel remains usable
-- bottom navigation remains balanced
-- no large dead regions
-- no panel overlap
-- no text clipping
+Do NOT introduce another display font.
 
 ==================================================
-14. DEMO FLOW VERIFICATION
+5. COLOR SYSTEM
 ==================================================
 
-Run the exact intended judge sequence:
+I have also provided a palette reference image.
 
-OPEN
-↓
-EXPLORE
-↓
-SELECT ARGO
-↓
-VERIFY
-↓
-COMPARE
-↓
-UNDERSTAND
-↓
-SIMULATE
-↓
-REPLAY
-↓
-TRACE
+Use these exact supplied colors as the NIRIKSHAN design system:
 
-Verify that each transition is visually obvious.
+#212A31
+#FFFFFF
+#124E66
+#748D92
+#E8EEF1
+#F8FAFB
+#0A0F14
+#17191B
+#8AC6D0
+#000000
+#F5F4F0
 
-Do not add fake transitions.
+Create centralized design tokens / CSS variables.
 
-Do not add automatic animation purely for presentation.
+Do NOT scatter these hex values throughout the codebase.
 
-==================================================
-15. SCIENTIFIC REGRESSION
-==================================================
+Create a clear source of truth, for example:
 
-Confirm this task has not changed:
+--NIRIKSHAN-graphite: #212A31;
+--NIRIKSHAN-white: #FFFFFF;
+--NIRIKSHAN-deep-teal: #124E66;
+--NIRIKSHAN-slate: #748D92;
+--NIRIKSHAN-mist: #E8EEF1;
+--NIRIKSHAN-cloud: #F8FAFB;
+--NIRIKSHAN-ink: #0A0F14;
+--NIRIKSHAN-surface: #17191B;
+--NIRIKSHAN-aqua: #8AC6D0;
+--NIRIKSHAN-black: #000000;
+--NIRIKSHAN-warm: #F5F4F0;
 
-- GLORYS values
-- Argo values
-- model matching
-- residual = observation - model
-- thermocline
-- MLD
-- current speed
-- current direction
-- current shear
-- SAR trajectory
-- SAR integration
-- provenance
-- snapshot state
+You may create semantic aliases such as:
 
-==================================================
-16. VALIDATION
-==================================================
+--color-background
+--color-surface
+--color-border
+--color-text
+--color-muted
+--color-primary
+--color-accent
 
-Run:
+but they must reference the NIRIKSHAN palette tokens.
 
-PYTHONPATH=backend pytest backend/tests/
+Example:
 
-npm run build
+--color-primary: var(--NIRIKSHAN-deep-teal);
 
-npm run lint
+Do NOT randomly introduce additional brand colors.
 
-Then manually verify:
-
-1. application launch
-2. map rendering
-3. observation selection
-4. EvidenceCase
-5. profile comparison
-6. residual
-7. analytical cursor
-8. derived features
-9. SAR WORKSPACE
-10. SAR replay
-11. return to analysis
-12. snapshot capture
-13. snapshot restoration
+Existing semantic warning/error colors may remain if required for usability and scientific clarity, but keep them restrained and visually compatible with the new system.
 
 ==================================================
-17. DO NOT DO
+6. VISUAL DIRECTION
 ==================================================
 
-Do NOT:
+The existing product already has a serious scientific/operational aesthetic.
 
-- rewrite App.tsx
-- replace Cesium
-- replace Plotly
-- replace Zustand
-- redesign the entire panel
-- introduce a dashboard layout
-- add AI chatbot functionality
-- add fake confidence scores
-- add fake alerts
-- add fake forecasts
-- add new datasets
-- add authentication
-- add collaboration
-- add new backend services
+Preserve that direction.
 
-This is the final polish pass.
+NIRIKSHAN should feel:
+
+CALM
+PRECISE
+SCIENTIFIC
+INSTITUTIONAL
+PREMIUM
+OPERATIONAL
+
+Use:
+- flat surfaces
+- subtle borders
+- restrained contrast
+- strong typographic hierarchy
+- generous whitespace where appropriate
+- precise alignment
+- small-radius or restrained geometry
+- subtle interaction states
+- strong information hierarchy
+
+Avoid:
+- neon cyan glow
+- purple gradients
+- glassmorphism
+- glowing borders
+- excessive rounded cards
+- floating dashboard cards everywhere
+- giant hero gradients
+- particles
+- futuristic HUD elements
+- unnecessary shadows
+- excessive animations
+- "AI-looking" UI
+
+The product should feel expensive because of its restraint and precision.
 
 ==================================================
-18. REPORT
+7. HEADER / BRAND APPLICATION
 ==================================================
 
-At completion provide:
+Update the primary application header.
 
-A. First-60-seconds result
-B. Header hierarchy changes
-C. Inspection panel changes
-D. Profile chart changes
-E. Residual presentation changes
-F. Derived feature changes
-G. Provenance changes
-H. SAR transition changes
-I. Typography changes
-J. Responsive verification
-K. Demo workflow verification
-L. Scientific regression verification
-M. Backend test result
-N. Frontend build result
-O. Frontend lint result
-P. Files changed
-Q. Remaining issues
-R. Recommended next SINGLE task
+Replace the current NIRIKSHAN branding with the new NIRIKSHAN logo + wordmark.
 
-Then STOP.
+Recommended hierarchy:
 
-Do not automatically begin another implementation phase.
+[ NIRIKSHAN LOGO ]  NIRIKSHAN
+
+3D OCEAN ANALYSIS / RESPONSE WORKSPACE
+
+or use the existing product descriptor if already present and appropriate.
+
+Do not overcrowd the header.
+
+The logo should be visually recognizable but not oversized.
+
+Make the brand feel like an actual product identity rather than a text label.
+
+==================================================
+8. BROWSER / METADATA
+==================================================
+
+Update user-facing metadata:
+
+Document title:
+
+NIRIKSHAN — 3D Ocean Analysis & Response Workspace
+
+Use the existing product description/meta structure where applicable.
+
+Do not change backend/API metadata unless it is explicitly user-facing.
+
+==================================================
+9. PUBLIC ASSET ORGANIZATION
+==================================================
+
+Create a clean branding asset structure.
+
+Prefer something like:
+
+public/
+  branding/
+    NIRIKSHAN-logo.svg
+    NIRIKSHAN-mark.svg
+    NIRIKSHAN-logo-light.svg
+    NIRIKSHAN-logo-dark.svg
+    NIRIKSHAN-palette-reference.png
+
+  fonts/
+    cbs-font-sans-variable.woff2
+
+If the existing project structure has a better established asset location, follow that instead.
+
+The uploaded palette reference image should also be copied into the public asset structure for documentation/reference.
+
+Do not add unnecessary assets.
+
+==================================================
+10. SVG QUALITY
+==================================================
+
+If you create the logo as SVG:
+
+- use clean vector geometry
+- no embedded raster image
+- no unnecessary metadata
+- no excessive path complexity
+- ensure it scales cleanly
+- ensure it works at approximately 16–24px
+- ensure it works at larger presentation sizes
+- ensure dark/light variants are readable
+
+The mark should still look good when rendered in a single color.
+
+==================================================
+11. RESPONSIVENESS
+==================================================
+
+Make sure the new branding works at:
+
+- desktop
+- 1440px
+- 1920px
+- 2560px
+- smaller laptop screens
+
+Do not allow the new wordmark to create header overflow.
+
+Do not change the existing responsive architecture unnecessarily.
+
+==================================================
+12. ACCESSIBILITY
+==================================================
+
+Add appropriate:
+- alt text
+- aria-labels where required
+- sufficient contrast
+- focus states
+
+Do not use color alone to communicate important scientific information.
+
+==================================================
+13. VERY IMPORTANT — PRESERVE FUNCTIONALITY
+==================================================
+
+Do NOT modify:
+
+- GLORYS12V1 data
+- Argo data
+- model-observation comparison
+- nearest-neighbor matching
+- residual calculations
+- thermocline/MLD calculations
+- current vectors
+- SAR simulation
+- Euler integration
+- snapshot persistence
+- API endpoints
+- backend routes
+- data ingestion
+- scientific engine
+- test data
+- demo workflow
+
+This task is ONLY:
+
+BRAND + TYPOGRAPHY + COLOR SYSTEM + LOGO + USER-FACING PRODUCT NAME.
+
+==================================================
+14. FINAL VISUAL AUDIT
+==================================================
+
+After implementation, inspect the application as a human designer would.
+
+Ask:
+
+Does this look like a real scientific product?
+
+Does NIRIKSHAN feel like a coherent brand?
+
+Does the logo look custom rather than AI-generated?
+
+Does the typography feel intentional?
+
+Does the color palette feel consistent?
+
+Is the interface still restrained?
+
+Does anything look unnecessarily decorative?
+
+Does the product still feel like a serious INCOIS/ocean-science tool?
+
+Remove anything that feels:
+- generic
+- flashy
+- AI-generated
+- decorative
+- excessive
+
+==================================================
+15. VERIFICATION
+==================================================
+
+After completing the branding pass:
+
+1. Search the repository for visible "NIRIKSHAN" references.
+2. Confirm all user-facing occurrences have become NIRIKSHAN.
+3. Confirm the uploaded font is actually loaded by the browser.
+4. Confirm the logo renders correctly.
+5. Confirm dark/light logo contrast.
+6. Confirm no layout overflow.
+7. Run frontend lint.
+8. Run frontend build.
+9. Run the existing backend/scientific test suite to ensure nothing was accidentally affected.
+10. Do NOT change tests merely to make them pass.
+
+If anything fails because of the branding changes, fix it properly.
+
+==================================================
+16. IMPORTANT DESIGN PRINCIPLE
+==================================================
+
+DO NOT make the product look "more futuristic".
+
+Make it look MORE REAL.
+
+The final result should communicate:
+
+"NIRIKSHAN is a serious scientific instrument for understanding ocean conditions and supporting operational decisions."
+
+Not:
+
+"Here is another AI dashboard."
+
+Use restraint as the primary design tool.
+
+==================================================
+DELIVERABLE
+==================================================
+
+When finished, report:
+
+1. Files changed
+2. Logo asset locations
+3. Font asset location
+4. Where the centralized color tokens live
+5. All major user-facing NIRIKSHAN → NIRIKSHAN replacements
+6. Build result
+7. Lint result
+8. Test result
+9. Any remaining NIRIKSHAN references and why they were intentionally retained
+
+Do not make any unrelated changes.

@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'NIRIKSHAN Sans';
+  src: url('/fonts/cbs_font-sans-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 @theme {
   --color-surface-base: var(--surface-base);
   --color-surface-raised: var(--surface-raised);
@@ -30,27 +37,40 @@
 }
 
 :root {
-  /* Surface colors (Dark graphite base as primary) */
-  --surface-base: #111213;
-  --surface-raised: #18191B;
-  --surface-overlay: #202224;
+  /* Brand Core Tokens */
+  --NIRIKSHAN-graphite: #212A31;
+  --NIRIKSHAN-white: #FFFFFF;
+  --NIRIKSHAN-deep-teal: #124E66;
+  --NIRIKSHAN-slate: #748D92;
+  --NIRIKSHAN-mist: #E8EEF1;
+  --NIRIKSHAN-cloud: #F8FAFB;
+  --NIRIKSHAN-ink: #0A0F14;
+  --NIRIKSHAN-surface: #17191B;
+  --NIRIKSHAN-aqua: #8AC6D0;
+  --NIRIKSHAN-black: #000000;
+  --NIRIKSHAN-warm: #F5F4F0;
+
+  /* Semantic Mappings */
+  --surface-base: var(--NIRIKSHAN-ink);
+  --surface-raised: var(--NIRIKSHAN-surface);
+  --surface-overlay: var(--NIRIKSHAN-graphite);
   
   /* Text colors */
-  --text-primary: #F2F0E9; /* warm off-white */
-  --text-secondary: #9FA4A9;
-  --text-muted: #6B7075;
+  --text-primary: var(--NIRIKSHAN-cloud);
+  --text-secondary: var(--NIRIKSHAN-mist);
+  --text-muted: var(--NIRIKSHAN-slate);
   
   /* Accents and States */
-  --accent-interactive: #46848A; /* muted teal */
-  --accent-interactive-hover: #56A3AB;
-  --accent-warning: #C26344; /* muted rust / burnt orange */
+  --accent-interactive: var(--NIRIKSHAN-aqua); 
+  --accent-interactive-hover: var(--NIRIKSHAN-deep-teal);
+  --accent-warning: #C26344; /* Retained for semantic necessity */
   
   /* Borders and Lines */
-  --border-subtle: #292C30;
-  --border-strong: #3F444A;
+  --border-subtle: var(--NIRIKSHAN-graphite);
+  --border-strong: var(--NIRIKSHAN-slate);
   
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'NIRIKSHAN Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
   
   /* Spacing (8pt grid basis) */
